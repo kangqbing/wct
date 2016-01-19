@@ -394,5 +394,6 @@
   <modules>
     <module>saas</module>
     <module>soos</module>
+    <module>wx</module>
   </modules>
 </project>
