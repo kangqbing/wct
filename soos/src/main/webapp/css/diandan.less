@@ -1,0 +1,793 @@
+.section-diandan {
+	@orderPlainWidth : 372px;
+	@orderBtnWidth : 80px;
+	@orderBoxWidth : @orderPlainWidth - @orderBtnWidth;
+	@bottomBtnHeight : 6rem;
+
+	@orderHeaderHeight : 220px;
+	@orderFooterHeight : 10rem;
+
+	@orderGridHeaderHeight : 32px;
+	
+	@orderFooterBG : rgb(230, 230, 230);
+	@orderHeaderBG : #ffc;
+	// 页面框架
+	position : relative; height : 100%;
+	.btn {
+		/*border-radius: 0;*/ white-space: normal;
+		font-weight: bold;
+		&.btn-pager, &.btn-prev, &.btn-next, &.btn-search, &.btn-print {
+			background-color: #ec971f!important;
+		}
+	}
+	.order-plain {
+		position : absolute; left : 0; top : 0; bottom : 0; padding : 0; margin : 0;
+		width : @orderPlainWidth; border-right : 1px solid @xBaseBorderColor;
+		// outline : 1px solid red;
+	}
+	.menu-plain {
+		position : absolute; left : 0; top : 0; bottom : 0; right : 0; padding : 0; margin : 0;
+		margin-left : @orderPlainWidth;
+		padding-bottom : @bottomBtnHeight;
+	}
+	.btns-plain {
+		position : absolute; left : 0; right : 0; bottom : 0;
+		margin-left : @orderBoxWidth;
+		height : @bottomBtnHeight;
+		// outline: 1px solid blue;
+	}
+
+
+	// 订单样式
+	.order-box {
+		height : 100%; width : @orderBoxWidth; position : relative;
+		border-right : 1px solid @xBaseBorderColor; padding-bottom : @orderFooterHeight;
+		
+		.order-body {
+			// position : absolute; top : 0; bottom : 0; left : 0; right : 0;
+			// padding-top : (@orderHeaderHeight + @orderGridHeaderHeight); padding-bottom: @orderFooterHeight;
+			// outline: 1px solid #123;
+			position : relative; padding-top : 0; padding-bottom : 0; height: 100%;
+			display: -webkit-box; display : -moz-box; display : -ms-box;
+			-webkit-box-orient : vertical; -moz-box-orient : vertical; -ms-box-orient : vertical;
+
+		}
+		.order-footer  {
+			position : absolute; left : 0; right : 0; bottom : 0; z-index: 2;
+			height : @orderFooterHeight;
+			background-color: @orderFooterBG;
+			border-top : 1px solid @xBaseBorderColor;
+			// outline: 1px solid blue;
+		}
+	}
+
+	// 订单菜品按钮群组
+	.order-btngrp {
+		width : @orderBtnWidth; position : absolute; right : 0; bottom : 0; top : 0;
+		padding-bottom : @bottomBtnHeight;
+		// outline: 1px solid #abc;
+		@btnCount : 12;
+		@btnHeight : percentage(1 / 12);
+		> .btn {
+			height: @btnHeight;
+		}
+		> .btn.addfood {
+			height : 2*@btnHeight; background-color: #f96; color: #fff;
+		}
+		> .btn.checkout {
+			height : 2*@btnHeight; background-color: #06a; color: #fff;
+		}
+	}
+
+	// 菜单样式
+	.menu-plain {
+		.cates, .foods {overflow : hidden; position : relative;}
+		.cell-btn {
+			padding : 10px 0 0; border : 1px solid @xBaseBorderColor; color : @xBaseColor; background-color: @xLightBtnBG;
+			cursor : pointer;
+		}
+		.cates {
+			height : 25%; background : @xDarkBtnBG;
+			// outline: 1px solid red;
+		}
+		.foods {
+			height : 75%; background-color: lighten(@xDarkBtnBG, 10%);
+			// outline: 1px solid green;
+		}
+		.cates > .cell-btn {
+			height : 50%;
+			background-color: @xDarkBtnBG;
+			&:nth-of-type(5n) {
+				margin-left : percentage(2 / 12);
+				right : percentage(2 / 12);
+			}
+			&.btn-search, &.btn-pager {
+				position : absolute; right : 0;
+			}
+			&.btn-search {
+				top : 0;
+			}
+			&.btn-pager {
+				bottom : 0;
+			}
+			&.active, &:active {
+				background-color: darken(@xDarkBtnBG, 50%);
+				color : #fff;
+			}
+		}
+		.foods > .cell-btn {
+			@rows : 6;
+			@height : percentage(1 / 6);
+			height : @height;
+			background-color: @xLightBtnBG;
+			&.btn-prev, &.btn-next {
+				position : absolute; bottom : 2px; right : 0;
+			}
+			&.btn-prev {
+				right : percentage(2 / 12);
+			}
+			&.active, &:active {
+				background-color: darken(@xLightBtnBG, 5%);
+			}
+			&.soldouted {
+				background-color: #D9534F; border-color : #D43F3A; color : #fff;
+			}
+			&.soldout-food {
+				color: #FFF; background-color: #F0AD4E; border-color: #EEA236;
+			}
+			.food-tag {
+				@size : 32px; @bg : #f60;
+				position : absolute; left : 0; top : 0;
+				display: block; width : @size; height : @size; line-height: @size / 2;text-align: left;
+				background-color : transparent; background-size : @size @size; background-position : 0 100%;
+				background-repeat : no-repeat;
+				background-image : -webkit-gradient(linear, 0 0, 100% 100%,from(@bg),color-stop(0.5, @bg),color-stop(0.5, transparent),to(transparent));
+				&:after {
+					padding-left : @size / 8;
+					font-size: 12px; color : #fff;
+				}
+				&.zfood:after {
+					content : "招";
+				}
+				&.xfood:after {
+					content : "新";
+				}
+				&.jfood:after {
+					content : "荐";
+				}
+			}
+			.tmpfood-tag {
+				@size : 32px; @bg : #f60;
+				position : absolute; right : 0; top : 0;
+				display: block; width : @size; height : @size; line-height: @size / 2;text-align: right;
+				background-color : transparent; background-size : @size @size; background-position : 0 100%;
+				background-repeat : no-repeat;
+				background-image : -webkit-gradient(linear, 100% 0, 0 100%,from(@bg),color-stop(0.5, @bg),color-stop(0.5, transparent),to(transparent));
+				&:after {
+					padding-right : @size / 8;
+					font-size: 12px;content : "临"; color : #fff;
+				}
+			}
+		}
+		
+	}
+
+	// 单头信息样式
+	.order-header {
+		> div {
+			position: relative; padding : 0 .5rem; cursor : pointer;
+			.more {
+				display: block; position : absolute; top : 50%; right : 0; margin-top : -8px;
+				width : 16px; height : 16px; font-size: 16px;
+			}
+			&.disabled .more {
+				display: none;
+			}
+		}
+		.item {
+			padding : 0; 
+			label, span {
+				padding : 0; padding-right : .5rem;
+				line-height: 3rem; height : 3rem; line-height: 2.5rem; vertical-align: middle; font-weight: bolder;
+			}
+			.btn-block {
+				height : 3rem; line-height: 3rem; padding: 0 .5rem; vertical-align: middle;
+				white-space: nowrap;text-overflow: ellipsis;overflow: hidden;
+			}
+		}
+	}
+
+	// 订单样式
+	.order-body {
+		overflow: hidden;
+		// overflow: auto;
+		.order-header {
+			position : relative; z-index : 2; max-height : @orderHeaderHeight; 
+			background-color: @orderHeaderBG;
+			// outline: 1px solid #111;
+			-webkit-box-flex : 1;
+			-webkit-box-flex-group : 2;
+		}
+		.grid-header {
+			position : relative; z-index: 1; 
+			// margin-top : (-1 * @orderGridHeaderHeight); 
+			background-color: #fff; border-bottom : 1px solid @xBaseBorderColor;
+			-webkit-box-flex : 1;
+			-webkit-box-flex-group : 2;
+		}
+		.order-list {
+			-webkit-box-flex : 1;
+			-webkit-box-flex-group : 1;
+			height : 0; overflow: hidden;
+		}
+		// 菜品制作状态
+		.make-status {
+			@waitBG : #eb9316; @waitColor : #fff;
+			@immediateBG : #2aabd2; @immediateColor : #fff;
+			@urgentBG : #c12e2a; @urgentColor : #fff;
+			@upBG : #419641; @upColor : #fff;
+			display: inline-block; font-size: 1rem; width: 1.5rem; height: 1.5rem; line-height: 1.5rem; text-align: center; vertical-align: middle;
+			// 等叫 -- 0
+			&[title="0"] {
+				background-color: @waitBG; color : @waitColor;
+				&:after {content : "等";}
+			}
+			// 即起 -- 1
+			&[title="1"] {
+				background-color: @immediateBG; color : @immediateColor; visibility: hidden;
+				&:after {content : "即";}
+			}
+			// 加急 -- 2
+			&[title="2"] {
+				background-color: @urgentBG; color : @urgentColor;
+				&:after {content : "急";}
+			}
+			// 已上菜 -- 3
+			&[title="3"] {
+				background-color: @upBG; color : @upColor;
+				&:after {content : "上";}
+			}
+			// &:after {
+			// 	content : attr(title);		
+			// }
+		}
+		// 用户选择的菜品条目
+		.grid-row.active {
+			background-color: #265a88!important; color : #fff!important;
+		}
+		// 已下单菜品条目状态
+		.grid-row.ordered {
+			background-color: #5cb85c;
+		}
+		// 待确认数量
+		.food-item.check-count > .num {
+			&:after{
+				content : '?';
+				color : red;
+			}
+		}
+		.food-item {
+			background-color: #fff; border : 0 none;
+			border-top : 1px solid @xBaseBorderColor;
+			> .txt, > .num, > .price, > .unit {font-weight: 700;}
+		}
+		.food-child-item {
+			background-color: #fff; border : 0 none;
+			> .txt, > .num, > .price, > .unit {font-weight: 400;}
+		}
+		.food-item, .food-child-item {
+			.cancelreason > .txt:first-child {
+				&:before {
+					content : "[退]";
+				}
+			}
+			.sendreason > .txt:first-child {
+				&:before {
+					content : "[赠]";
+				}
+			}
+			.foodremark > .txt:first-child {
+				&:before {
+					content : "[注]";
+				}
+			}
+			.modifyprice > .txt:first-child {
+				&:before {
+					content : "[改]";
+				}
+			}
+		}
+		
+	}
+
+
+
+	.order-footer {
+		> .order-remark > div, > .btn-grp > div {padding : 0;}
+		> .btn-grp .btn {height : @orderFooterHeight - @bottomBtnHeight;}
+		> .order-remark{
+			line-height: @bottomBtnHeight; vertical-align: middle; padding : 0 .5rem;
+			.btn {height : 4rem; margin-top: 1rem;}
+
+			.dollar, .cash, label {font-weight: 700; font-size: 1.5rem;}
+			.dollar, .cash {color : red;}
+		}
+
+	}
+	
+	// 订单菜品操作按钮组
+	.order-btngrp {
+		& > .btn {
+			margin : 0; height : 5rem; /*border-radius: 0;*/ border-right : 0 none;
+		}
+	}
+	
+	// 订单操作按钮组
+	.btns-plain {
+		& > div, & > div > div {padding : 0;}
+		.btn {height : @bottomBtnHeight;}
+
+		.col-xs-2:first-of-type > .btn {background-color: #f96;}
+
+	}
+
+}
+
+.btngrp-box.btngrp-1x3 {
+	.btngrp-box(100%, 7rem, 3, 1);
+}
+.btngrp-box.btngrp-4x3 {
+	.btngrp-box(100%, 28rem, 3, 4);
+}
+.btngrp-box.btngrp-3x3 {
+	.btngrp-box(100%, 21rem, 3, 3);
+}
+.btngrp-box.btngrp-5x5 {
+	.btngrp-box(100%, 35rem, 5, 5);
+}
+.btngrp-box.btngrp-2x3 {
+	.btngrp-box(100%, 14rem, 3, 2);
+}
+
+// 折扣选项组
+.btngrp-box.discount-grp {
+	.btngrp-box(100%, 42rem, 3, 6);
+}
+
+// 纵向多选按钮组
+// 先把配置参数写死，待以后维护
+.btngrp-box.btngrp-vertical {
+	@boxHeight : 600px;
+	@boxWidth : 100%;
+	@btnCols : 1;
+	@btnRows : 6;
+	@btnWidth : percentage(1 / @btnCols);
+	@btnHeight : percentage(1 / @btnRows);
+	.btngrp-box(@boxWidth, @boxHeight, @btnCols, @btnRows);
+
+	.btn-checkbox, .btn-radio, .btn-pager {
+		height : @btnHeight; width : @btnWidth;
+	}
+
+}
+
+// 套餐搭配选项
+.btngrp-box.setfood-btn {
+	@btnCols : 6; 
+	@btnWidth : percentage(1 / @btnCols);
+	@btnHeight : 5rem;
+	height : auto; position : relative; background : @xLightBtnBG;
+	.btn-checkbox {
+		width : @btnWidth; height : @btnHeight;
+	}
+}
+
+// 搜索菜品窗口
+#search_food {
+	left : 37rem; bottom : 75%;
+	> .modal-dialog {
+		position : absolute;margin : 0; width : auto;
+		left : 0; right : 0; top : 0; bottom : 0;
+	}
+
+}
+
+// 支付窗口
+.pay-modal {
+	.modal-dialog {
+		position : absolute; left : 372px; right : 0; top : 0; bottom : 0;
+		margin : 0; padding : 0; width : auto!important;
+		> .modal-content, .modal-body, .pay-ctrl {height : 100%; width : 100%; padding : 0; margin : 0;}
+	}
+	.pay-ctrl {
+		position : relative; display: -webkit-box; display: -moz-box; display: -ms-flexbox;
+		-webkit-box-orient : horizontal; -moz-box-orient : horizontal; -ms-box-orient : horizontal; -o-box-orient : horizontal; box-orient : horizontal;
+		
+		.pay-schema {
+			width : 35%;
+			// -webkit-box-flex : 1; -moz-box-flex : 1; -ms-box-flex : 1; -o-box-flex : 1; -box-flex : 1; outline: 1px solid blue;
+			position : relative; display: -webkit-box; display: -moz-box; display: -ms-box;
+			-webkit-box-orient : vertical; -moz-box-orient : vertical; -ms-box-orient : vertical; -o-box-orient : vertical; box-orient : vertical;
+			border-right : 1px solid @xBaseBorderColor;
+			label, p {margin-bottom : 0; margin-top : .5rem;}
+			p {padding : 0 0.5rem 0 1rem; font-size : 12px;}
+			label, p.sum {font-size : 1.5rem; color : #111; padding : 0 0.5rem;}
+			> header {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 2;
+				margin-bottom : .5rem;
+				>h4{margin-left: 10px;}
+				.btn-close {position : absolute; right : 0; top : 0;}
+			}
+			> section {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 1;
+				// outline: #123;
+				.list-group-item {
+					padding : 0; position : relative; min-height: 3.5rem; cursor : pointer;
+					.btn-default {position : absolute; right : 0; }
+				}
+				.list-group-item.active {
+					background-color: #265a88!important; 
+					label, p {color : #fff!important;}
+				}
+			}
+			> footer {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 2;
+			}
+			.form-group, .list-group {
+				margin : 0;
+			}
+		}
+		.pay-subject {
+			-webkit-box-flex : 1; -moz-box-flex : 1; -ms-box-flex : 1; -o-box-flex : 1; -box-flex : 1;
+			// outline: 1px solid red;
+			position : relative; height : 100%;
+			> .panel {
+				display: -webkit-box; display: -moz-box; display: -ms-box;
+				-webkit-box-orient : vertical; -moz-box-orient : vertical; -ms-box-orient : vertical; -o-box-orient : vertical; box-orient : vertical;
+				position : absolute; left : 0; top : 0; right : 0; bottom : 0;
+				margin : 0;
+				> .panel-heading, > .panel-footer {
+					-webkit-box-flex : 1; -webkit-box-flex-group : 2;
+				}
+				> .panel-body {
+					-webkit-box-flex : 1; -webkit-box-flex-group : 1;
+				}
+				.form-horizontal .form-group {
+					margin-bottom : .5rem;
+					>label{
+						font-size: 1.6rem;
+					}
+				}
+				.hll-paytype {
+					>h4{
+						margin-top: 0px;
+					}
+					label{
+						padding:6px 0px;
+					}
+					margin : 0;
+					.btn-group {
+						margin-bottom : 5px;
+					}
+					// .btn  {
+					// 	height : 64px; line-height: 32px;
+					// 	.icon-keyboard, .icon-koo, .icon-weixin, .icon-zhifubao {
+					// 		width : 34px; 
+					// 		height : 34px;
+					// 		float: left;
+					// 	}
+					// 	.icon-keyboard {
+					// 		.x-icon-34_keyboard();
+					// 	}
+					// 	.icon-koo {
+					// 		.x-icon-34_koo();
+					// 	}
+					// 	.icon-weixin {
+					// 		.x-icon-34_weixin();
+					// 	}
+					// 	.icon-zhifubao {
+					// 		.x-icon-34_zhifubao();
+					// 	}	
+								
+					// }
+					// @media screen and(max-width:1200px) {
+					// 	.btn  {
+					// 		.btncelldoc{
+					// 			display: block;
+					// 		}
+					// 		.icon-keyboard, .icon-koo, .icon-weixin, .icon-zhifubao {
+					// 			float : none;
+					// 		}
+					// 	}
+
+					// }
+					.icon-keyboard, .icon-koo, .icon-weixin, .icon-zhifubao {
+						width : 34px; height : 34px;
+					}
+					.icon-keyboard {
+						.x-icon-34_keyboard();
+					}
+					.icon-koo {
+						.x-icon-34_koo();
+					}
+					.icon-weixin {
+						.x-icon-34_weixin();
+					}
+					.icon-zhifubao {
+						.x-icon-34_zhifubao();
+					}
+
+					@media screen and (min-width : 1400px) {
+						.btn {
+							> div {
+								display: inline-block; vertical-align: middle;
+							}
+							.btncelldoc {
+								margin-left : .5rem;
+							}
+						}
+					}
+					
+
+
+				}
+				.qrcode-box {
+					// position : absolute; width : 200px; height : 240px; top : 56px; left : 50%; margin-left : -100px;
+					position : relative; margin : 0 auto 0; width : 300px; height : 300px; text-align: center;
+					h4 {font-size : 1.5rem;}
+					p {text-align: center;}
+					.qrcode-wrap {
+						@qrCodeSize : 250px;
+						position : relative; width : @qrCodeSize; height : @qrCodeSize; margin : 0 auto;
+						.qrcode-type {
+							@icoSize : (@qrCodeSize / 6.25);
+							position : absolute; display: block; width : @icoSize; height : @icoSize;
+							top : 50%; left : 50%; margin-top : -(@icoSize / 2); margin-left : -(@icoSize / 2);
+						}
+					}
+					.qrcodelabel{
+						color:red;
+						font-size: 40px;
+					}
+				}
+			}
+
+			.vip-pay {
+				.form-horizontal .form-group {
+					margin-bottom : 3px;
+				}
+				.help-block {
+					margin-bottom : 5px;
+				}
+				.help-block.info {
+					margin-top : 0px; margin-bottom : 3px; padding : 0; font-size: 12px;
+				}
+				.help-block.info > span {
+					display:inline-block; padding : 0; padding-left : 6px;
+					&:first-child {
+						width : 10em; text-overflow : ellipsis; white-space: nowrap; overflow: hidden;
+					}
+				}
+				.user-voucher {
+					margin-bottom : 5px;
+				}
+				.voucher-grp {
+					height : 7rem;
+				}
+			}
+		}	
+	}
+
+}
+
+// 套餐配置窗口
+.setfood-modal {
+	.modal-dialog {
+		position : absolute; left : 372px; right : 0; top : 0; bottom : 0;
+		margin : 0; padding : 0; width : auto!important;
+		> .modal-content, .modal-body, .setfood-ctrl {height : 100%; width : 100%; padding : 0; margin : 0;}
+	}
+	.setfood-ctrl {
+		position : relative; display: -webkit-box; display: -moz-box; display: -ms-flexbox;
+		-webkit-box-orient : horizontal; -moz-box-orient : horizontal; -ms-box-orient : horizontal; -o-box-orient : horizontal; box-orient : horizontal;
+		.ctrl-schema, .ctrl-opt {
+			// width : 50%;
+			// -webkit-box-flex : 1; -moz-box-flex : 1; -ms-box-flex : 1; -o-box-flex : 1; -box-flex : 1;
+			// outline: 1px solid blue;
+			padding : 0;
+			position : relative; display: -webkit-box; display: -moz-box; display: -ms-box;
+			-webkit-box-orient : vertical; -moz-box-orient : vertical; -ms-box-orient : vertical; -o-box-orient : vertical; box-orient : vertical;
+			border-right : 1px solid @xBaseBorderColor;
+			> header {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 2;
+				// margin-bottomargin-bottom : .5rem;
+				// .btn-close {position : absolute; right : 0; top : 0;}
+				> h4 {
+					position : absolute; left : 0; top : 0;
+				}
+			}
+			> section {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 1;
+				position : relative;
+			}
+			> footer {
+				-webkit-box-flex : 1;
+				-webkit-box-flex-group : 2;
+			}
+			.btn {
+				border-radius: 0; height : 4rem;
+			}
+		}
+		.ctrl-opt {
+			-webkit-box-flex : 1; -moz-box-flex : 1; -ms-box-flex : 1; -o-box-flex : 1; -box-flex : 1;
+			// outline: 1px solid red;
+		}
+		.opt-box {
+			position : absolute; top : 0; left : 0; right : 0; bottom : 0; overflow: hidden;
+		}
+		.btn-list {
+			height : auto; width : 100%;
+			.btn-cell {
+				height : 92px; white-space : normal; padding : .5rem;
+				p {margin-bottom : 0;}
+			}
+		}
+	}
+}
+
+
+
+// 桌台界面
+.section-table, .table-ctrl {
+	.menu-plain {padding-bottom : 0;}
+	.menu-plain .cates {
+		position : relative;
+		height : percentage(1 / 8); background-color: #fff;
+	}
+	.filter-bar {
+		.btn {white-space: nowrap;}
+		.badge {
+			background-color: #f00;
+		}
+	}
+	.area-bar {
+		position : relative; overflow: hidden; height : 100%; background-color: @xDarkBtnBG;
+		.cell-btn {
+			height : 100%; border-color : #e6e6e6;
+			&.active, &:active {
+				background-color: darken(@xDarkBtnBG, 50%);
+				color : #fff;
+			}
+		}
+		.btn-pager {
+			position : absolute; right : 0; top : 0;
+		}
+		.btn-all {
+			// position : absolute; left : 0; top : 0;
+		}
+
+	}
+	.table-menu {
+		position : relative; height : percentage(7 / 8); background-color: #fff;
+		.cell-btn {
+			@rows : 6; @cols : 6; @height : percentage(1 / @rows);
+			@occupyColor : #fff; @occupyBG : #D9534F; @occupyBorder : #D43F3A;
+			@idleColor : #fff; @idleBG : #5CB85C; @idelBorder : #4CAE4C;
+			@disabledColor : #fff; @disabledBG : #bdbcbb; @disabledBorder : #e6e6e6;
+			position : relative; height : @height; background-color: #fff;
+			padding : 0;
+			&.btn-prev, &.btn-next {
+				position : absolute; bottom : 2px; right : 0; opacity: 1;
+				border : 1px solid #e6e6e6;
+			}
+			&.btn-prev {
+				right : percentage(1 / @cols);
+			}
+			
+			// 桌台占用 
+			&.occupy {
+				color: @occupyColor;
+				background-color: @occupyBG;
+				border-color: #e6e6e6;
+				&.active, &:active {
+					background-color : darken(@occupyBG, 10%);
+				}
+			}
+			// 桌台空闲
+			&.idle {
+				color: @idleColor;
+				background-color: @idleBG;
+				border-color: #e6e6e6;
+				&.active, &:active {
+					background-color : darken(@idleBG, 10%);
+				}
+			}
+			// 桌台禁用
+			&.disabled {
+				color: @idleColor;
+				background-color: @disabledBG;
+				border-color: @disabledBorder;
+			}
+			// 需求变更，桌台选择按钮选中状态时要根据桌台状态，设置背景色高亮
+			// &.active, &:active {
+			// 	background-color: darken(@xDarkBtnBG, 50%);
+			// }
+			p {
+				position : absolute; width : 100%; text-align: center;
+				font-weight: bold; font-size: 1rem;
+			}
+			p.name {
+				top : 50%; margin-top : -1.5rem; font-size: 1.5rem;
+			}
+			p.time, p.amount {
+				position : absolute; width : 50%; bottom : 0; font-weight: normal; font-size: 1em;
+			}
+			p.time {left : 0;}
+			p.amount {right : 0;}
+			.table-lock {
+				@size : 32px; @bg : #837997;
+				position : absolute; left : 0; top : 0;
+				display: block; width : @size; height : @size; line-height: @size / 2;text-align: left;
+				background-color : transparent; background-size : @size @size; background-position : 0 100%;
+				background-repeat : no-repeat;
+				background-image : -webkit-gradient(linear, 0 0, 100% 100%,from(@bg),color-stop(0.5, @bg),color-stop(0.5, transparent),to(transparent));
+				&:after {
+					padding-left : @size / 8;
+					font-size: 1rem;content : "锁";
+				}
+			}
+			.table-union {
+				@size : 24px;
+				position : absolute; left : 50%; top : 0; margin-left : -(@size / 2);margin-top : (@size / 4);
+				display: block; width : @size; height : @size; line-height: @size; text-align: center;
+				// border-radius: 50%; -webkit-border-radius : 50%; background-color : #f60;
+				font-size : 2rem;
+			}
+			.table-book {
+				@size : 32px; @bg : #f60;
+				position : absolute; right : 0; top : 0;
+				display: block; width : @size; height : @size; line-height: @size / 2;text-align: right;
+				background-color : transparent; background-size : @size @size; background-position : 0 100%;
+				background-repeat : no-repeat;
+				background-image : -webkit-gradient(linear, 100% 0, 0 100%,from(@bg),color-stop(0.5, @bg),color-stop(0.5, transparent),to(transparent));
+				&:after {
+					padding-right : @size / 8;
+					font-size: 1rem;content : "订";
+				}
+			}
+		}
+	}
+
+}
+
+// 换台选择窗口
+.table-modal {
+	.modal-dialog {
+		position : absolute; left : 372px; right : 0; top : 0; bottom : 0;
+		margin : 0; padding : 0; width : auto!important;
+		> .modal-content, .table-ctrl{height : 100%; width : 100%; padding : 0; margin : 0;}
+		.modal-body {position : absolute; top : 56px; bottom : 0; left : 0; right : 0; margin : 0; padding : 0;}
+		.menu-plain {
+			position : absolute; left : 0; right : 0; top : 0; bottom : 0;
+		}
+	}
+}
+
+// 提单列表样式
+.order-catch {
+	 border : 1px solid #ccc;
+	.item {
+		padding-top : 10px; height : 230px; border-right : 1px solid #ccc; cursor : pointer;
+		&:active {
+			background : #eee;
+		}
+		&:hover {
+			background : #eee;
+		}
+	}
+}

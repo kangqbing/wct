@@ -1,0 +1,456 @@
+<section class="section section-profile" ng-controller="MoreViewController">
+	<div class="row site-btngrp">
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appSoldOutSetting($event)">沽清管理</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appVersionSetting($event)">数据版本</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appModifyPWD($event)">修改密码</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appSetting($event)">站点设置</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appServerInfo($event)">服务器信息</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appChangeShiftInfo($event)">交班</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appLogout()">注销</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appExit($event)">退出</button>
+		<button class="btn btn-default col-xs-4" type="button" ng-click="appDebug($event)" ng-if="isDevMode()">调试</button>
+	</div>
+	<alert class="site-toptip" ng-repeat="alert in toptips" type="{{alert.type}}" close="closeTopTip($index)" dismiss-on-timeout="1500">{{alert.msg}}</alert>
+	
+	<!-- 服务器信息 -->
+	<script type="text/ng-template" id="js/profile/servermodal.html">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">
+				服务器信息
+				<small>哗啦啦服务热线:{{HLLServiceTel}}</small>
+			</h4>
+			
+		</div>
+		<div class="modal-body">
+			<div class="col-xs-6 clearfix">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							店铺基本信息
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">集团名称</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{shopInfo.groupName}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">店铺ID</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{shopInfo.shopID}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">店铺名称</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >{{shopInfo.shopName + '(' + (shopInfo.IsShopReged == 1 ? '已' : '未') + '注册)'}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">店铺电话</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >{{shopInfo.shopTel}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">所在城市</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >{{shopInfo.shopCityName}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">店铺地址</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >{{shopInfo.shopAddress}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">营业模式</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >{{shopInfo.shopBizMode == 0 ? '正餐' : '快餐'}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">开通业务</label>
+								<div class="col-xs-8">
+									<p class="form-control-static" >
+										<span class="serv-item" ng-class="{active : chkServiceFeatureIsOpen(el.value)}" ng-repeat="el in ShopServiceFeatures">
+											<span class="glyphicon glyphicon-ok"></span>
+											{{el.label}}
+										</span>
+										{{mapShopServiceFeatures(shopInfo.shopServiceFeatures)}}
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							本地服务器信息
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">服务器名</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.HttpServerComputerName}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">服务器地址</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{getLocalServerLocation()}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">日期格式</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.HttpServerSysDateTimeFormatStr}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">厨打凭证类型</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.KitchenPrintBillTypeLst}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">账单元整方式</label>
+								<div class="col-xs-8">
+									<!--<p class="form-control-static">{{localServer.moneyWipeZeroType}}</p>-->
+									<p class="form-control-static">{{mapMoneyWipeZeroTypeLabel(localServer.moneyWipeZeroType)}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">自助下单安全码</label>
+								<div class="col-xs-8" ng-if="shopInfo.shopBizMode == 0">
+									<p class="form-control-static">{{localServer.ConfirmationCode}}</p>
+									<button class="btn btn-default btn-sm col-xs-4 btn-success" ng-click="RefreshConfirmationCode()">刷新</button>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">打印机端口名</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.LocalSitePrinterPortName}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">打印机端口类型</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.LocalSitePrinterPortType}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">打印机纸张大小</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.LocalSitePrinterPageSize}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">每行打印字符数</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localServer.LocalSitePrinterLineMaxCharCount}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-6 clearfix">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							云端服务器信息
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">云端接口域名</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{cloudServer.apiAPIHost}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">云端服务器状态</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{cloudServer.CloudHostConnecttionStatus == 'ONLINE' ? '在线' : '离线'}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							本地APP信息
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">服务端版本号</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.appVersionNo}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">WebAPP版本号</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.WebAppVersionNo}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">安装路径</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.appPath}}</p>
+								</div>
+							</div>
+							<div class="form-group hidden">
+								<label for="" class="col-xs-4 control-label">数据库文件名</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.DBFileName}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">数据库大小</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.DBFileSize}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">调试模式</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localApp.DebugModel == 'ON' ?  "开启" : "关闭"}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							本地服务器统计信息
+						</h4>
+					</div>
+					<div class="panel-body">
+						<div class="form-horizontal">
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">厨打程序状态</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localMonitor.KitchenPrintActive == 1 ? '开启' : '关闭'}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">接收远端消息</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{localMonitor.IsRevMsgFormAPIHost == 1 ? '开启' : '关闭'}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">服务器运行时长</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{formatTimeInterval(localMonitor.HttpServerStartTickCount)}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">监控程序运行时长</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{formatTimeInterval(localMonitor.MonitorThreadLastTickCount)}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">消息程序运行时长</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{formatTimeInterval(localMonitor.MsgThreadLastTickCount)}}</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="" class="col-xs-4 control-label">厨打程序运行时长</label>
+								<div class="col-xs-8">
+									<p class="form-control-static">{{formatTimeInterval(localMonitor.PrintThreadLastTickCount)}}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btn-lg" ng-click="close()" >关闭</button>
+				</div>
+			</div>
+		</div>
+	</script>
+	<!-- 班结表 -->
+	<script type="text/ng-template" id="js/profile/changeshift.html">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">
+				班结表
+			</h4>
+
+			
+		</div>
+		<div class="modal-body changeshift">
+			<div class="col-xs-5 clearfix">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="form-horizontal" ng-bind-html="parseSnippet(shiftForm)">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-7 clearfix">
+				<form class="form-horizontal" name="changeShiftForm">
+					<div class="form-group" >
+						<label for="" class="col-xs-3 control-label" >备用金</label>
+						<div class="col-xs-5" ng-class="{'has-success' : changeShiftForm.pettyCash.$dirty && changeShiftForm.pettyCash.$valid, 'has-error' : changeShiftForm.pettyCash.$invalid}">
+							<input name="pettyCash" class="input-lg form-control" ng-model="pettyCash" bv-isdigit bv-between="true" min="0" max="10000" autofocus="true" ng-focus="inputFocus($event)"/>
+							<small class="help-block" ng-show="changeShiftForm.pettyCash.$dirty && changeShiftForm.pettyCash.$error.bvBetween">请输入大于0，小于10000的备用金</small>
+                        	<small class="help-block" ng-show="changeShiftForm.pettyCash.$dirty && changeShiftForm.pettyCash.$error.bvIsdigit">请输入正确的数字</small>
+						</div>
+					</div>
+					<div class="form-group">
+						
+							<numkeyboard cur-target="focusInputEl"></numkeyboard>
+						
+					</div>
+					<div class="form-group">
+						<label for="" class="col-xs-3 control-label" >交班日志</label>
+						<div class="col-xs-9">
+							<textarea type="text" class="input-lg form-control" rows="4" ng-model="shiftNote" /></textarea>
+							<button class="btn btn-default btn-success btn-lg" ng-click="save()">保存日志</button>
+						</div>
+					</div>
+					<div>
+						<button class="col-xs-12 btn btn-default btn-lg" ng-click="print()">打印交班报表</button>
+					</div>
+					<div>
+						<button class="col-xs-12 btn btn-default btn-success btn-lg btn-submit" ng-click="submit()">确认交班</button>
+					</div>
+
+				</form>
+			
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btn-lg" ng-click="close()" >关闭</button>
+				</div>
+			</div>
+		</div>
+	</script>
+	<!-- 密码重置 -->
+	<script type="text/ng-template" id="js/profile/modifypwd.html">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">
+				修改密码
+			</h4>
+			
+		</div>
+		<div class="modal-body">
+			<form class="form-horizontal" name="modifypwd" role="form" novalidate="novalidate">
+				<div class="form-group">
+					<label for="oldpwd" class="col-xs-3 control-label">员工编号</label>
+					<div class="col-xs-6" >
+						<p class="form-control-static" >{{formData.empCode}}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldpwd" class="col-xs-3 control-label">员工姓名</label>
+					<div class="col-xs-6" >
+						<p class="form-control-static" >{{formData.empName}}</p>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="oldpwd" class="col-xs-3 control-label">旧密码</label>
+					<div class="col-xs-6" ng-class="{'has-success' : modifypwd.empOldPWD.$dirty && modifypwd.empOldPWD.$valid, 'has-error' : modifypwd.empOldPWD.$invalid}">
+						<input id="oldpwd" type="password" name="empOldPWD" class="form-control" ng-model="formData.empOldPWD" placeholder="请输入旧登录密码" bv-notempty bv-strlength min="2" max="30" autofocus="true">
+						<small class="help-block" ng-show="modifypwd.empOldPWD.$dirty && modifypwd.empOldPWD.$error.bvNotempty">请输入旧登录密码</small>
+						<small class="help-block" ng-show="modifypwd.empOldPWD.$dirty && modifypwd.empOldPWD.$error.bvStrlength">密码必须在2-30位之间</small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="newpwd" class="col-xs-3 control-label">新密码</label>
+					<div class="col-xs-6" ng-class="{'has-success' : modifypwd.empNewPWD.$dirty && modifypwd.empNewPWD.$valid, 'has-error' : modifypwd.empNewPWD.$invalid}">
+						<input id="newpwd" type="password" name="empNewPWD" class="form-control" ng-model="formData.empNewPWD" placeholder="请输入新登录密码" bv-notempty bv-strlength min="2" max="30">
+						<small class="help-block" ng-show="modifypwd.empNewPWD.$dirty && modifypwd.empNewPWD.$error.bvNotempty">请输入新登录密码</small>
+						<small class="help-block" ng-show="modifypwd.empNewPWD.$dirty && modifypwd.empNewPWD.$error.bvStrlength">密码必须在2-30位之间</small>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="confirmpwd" class="col-xs-3 control-label">确认密码</label>
+					<div class="col-xs-6" ng-class="{'has-success' : modifypwd.confirmPWD.$dirty && modifypwd.confirmPWD.$valid, 'has-error' : modifypwd.confirmPWD.$invalid}">
+						<input id="confirmpwd" name="confirmPWD" type="password" class="form-control" ng-model="formData.confirmPWD"placeholder="再次输入新密码" bv-notempty bv-strlength min="2" max="30" bv-issame="empNewPWD">
+						<small class="help-block" ng-show="modifypwd.confirmPWD.$dirty && modifypwd.confirmPWD.$error.bvNotempty">请重复新密码</small>
+						<small class="help-block" ng-show="modifypwd.confirmPWD.$dirty && modifypwd.confirmPWD.$error.bvStrlength">密码必须在2-30位之间</small>
+						<small class="help-block" ng-show="modifypwd.confirmPWD.$dirty && modifypwd.confirmPWD.$error.bvIssame">确认密码与新密码不符</small>
+					</div>
+				</div>
+				<input type="hidden" name="empKey" ng-model="formData.empKey" />
+			</form>
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btn-lg" ng-disabled="modifypwd.$invalid || modifypwd.$pristine" fm-submit="save()" >保存</button>
+				</div>
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btn-lg" ng-click="close()" >取消</button>
+				</div>
+			</div>
+		</div>
+	</script>
+	<!-- 版本信息窗口 -->
+	<script type="text/ng-template" id="js/profile/appversion.html">
+		<div class="modal-header">
+			<button class="close" type="button" data-dismiss="modal" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">
+				基本信息版本表
+			</h4>
+		</div>
+		<div class="modal-body">
+			<div class="table-responsive">
+				<table class="table table-hover table-striped table-condensed">
+					<thead>
+						<tr>
+							<th>信息类型</th>
+							<th>最后更新时间</th>
+							<th>本地最后更新时间</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="row in baseDataVersionLst">
+							<td>{{row.baseTypeName}}</td>
+							<td>{{row.lastUpdateTime | formatDateTimeStr}}</td>
+							<td>{{row.locallastUpdateTime | formatDateTimeStr}}</td>
+							<td>
+								<button type="button" class="btn btn-default btn-md" ng-click="update(row)" >更新</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="btn-group btn-group-justified" role="group">
+				<div class="btn-group" role="group">
+					<button type="button" class="btn btn-default btn-lg" ng-click="close()" >关闭</button>
+				</div>
+			</div>
+		</div>
+	</script>
+</section>

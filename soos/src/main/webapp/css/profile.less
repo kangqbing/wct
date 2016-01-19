@@ -1,0 +1,43 @@
+.server-modal {
+	.modal-dialog {
+		position : absolute; left : 6rem; right : 0; top : 0; bottom : 0;
+		margin : 0; padding : 0; width : auto!important;
+		> .modal-content, .table-ctrl{height : 100%; width : 100%; padding : 0; margin : 0;}
+		.modal-body {position : absolute; top : 56px; bottom : 46px; left : 0; right : 0; margin : 0; padding : 0; overflow: auto;}
+		.modal-footer {
+			position : absolute; bottom : 0; padding : 0; width : 100%;
+		}
+		
+	}
+	.form-group {
+		margin-bottom : 0; 
+	}
+	.serv-item {
+		display: inline-block; margin: .2rem .5rem; padding : .2rem .6rem .3rem; font-size: 1rem; font-weight: 700; color : #fff; text-align: center; white-space: nowrap; vertical-align: middle; border-radius: .25rem; line-height: 1.5rem;
+		background-color: #5CB85C; opacity: .65;
+		& > .glyphicon {
+			opacity : .65;
+		}
+		&.active, &.active > .glyphicon {
+			opacity : 1;
+		}
+	}
+	.changeshift{
+		overflow:hidden!important;
+		.control-label{
+			font-size: 2rem;
+		}
+		>div{
+			height:100%;
+			.panel,.panel-body{
+				height: inherit;
+			}
+			.form-group{
+				margin-top: 15px;
+			}
+			button{
+				margin-top: 15px;
+			}
+		}
+	}
+}

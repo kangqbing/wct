@@ -1,0 +1,39 @@
+package org.happy.base.beetl.tagext;
+
+import java.io.IOException;
+import java.io.Writer;
+
+public class NoLockEmptyStringWriter extends Writer {
+
+	public NoLockEmptyStringWriter() {
+
+	}
+
+	public NoLockEmptyStringWriter(char buf[]) {
+
+	}
+
+	@Override
+	public void write(char[] cbuf, int off, int len) throws IOException {
+
+	}
+
+	public void write(String str) throws IOException {
+
+	}
+
+	@Override
+	public void flush() throws IOException {
+
+	}
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+
+	}
+
+	public String toString() {
+		return "";
+	}
+}

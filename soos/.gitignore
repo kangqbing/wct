@@ -1,0 +1,9 @@
+/node_modules/
+/bower_components/
+/.tmp/
+/dist/
+dist.zip
+*.tar.gz
+npm-debug.log
+revision
+.DS_Store

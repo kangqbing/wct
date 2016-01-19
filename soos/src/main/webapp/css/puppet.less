@@ -1,0 +1,62 @@
+.section-puppet {
+	@orderPlainW : 292px;
+	position : relative; height : 100%; width : 100%; overflow: hidden;
+	// 订单模块，广告位模块基本布局样式
+	.order-plain, .ad-plain {
+		position : absolute; margin : 0; padding : 0; left : 0; right : 0; top : 0; bottom : 0; overflow: hidden;
+	}
+	.order-plain {
+		width : @orderPlainW; border : 1px solid @xBaseBorderColor; 
+		// outline: 1px solid red;
+		.payremark {line-height: 1.5em;}
+	}
+	.ad-plain {
+		margin-left : @orderPlainW; 
+		// outline : 1px solid blue;
+	}
+	// 无订单状态页面布局样式
+	&.noorder {
+		> .order-plain {width : 0;}
+		> .ad-plain {margin-left : 0;}
+	}
+
+	// 广告/二维码模块内部布局,广告/二维码栏垂直居中于屏幕
+	.ad-plain {
+		height : 100%; text-align: center; font-size : 0;
+		// 占位空元素
+		.placeholder, .ad-box {
+			vertical-align : middle; display: inline-block;
+		}
+		.placeholder {
+			overflow: hidden; position : relative; width : 0; min-height: inherit; height : inherit;
+		}
+		.ad-box {
+			width : 100%; height : 100%; background-color: #ccc;
+			> img {
+				display : block; height : 100%; width : 100%;
+			}
+			.carousel-control {background-image : none; visibility: hidden;}
+		}
+		.qrcode-box {
+			@qrCodeSize : 250px;
+			position : absolute; left : 50%; top : 50%; z-index : 99; margin-top : -150px; margin-left : -150px; text-align: center;  width: 300px; height : 300px;
+			background: #fff;
+			p {font-size : 24px;}
+			.qrcode-wrap {
+				position : relative; width : @qrCodeSize; height : @qrCodeSize; margin : 0 auto;
+				.qrcode-type {
+					@icoSize : (@qrCodeSize / 6.25);
+					position : absolute; display: block; width : @icoSize; height : @icoSize;
+					top : 50%; left : 50%; margin-top : -(@icoSize / 2); margin-left : -(@icoSize / 2);
+				}
+			}
+		}
+		#qrcode {
+			width : auto; height : auto; 
+		}
+		.qrcodelabel{
+			color:red;
+			font-size: 40px;
+		}
+	}
+}

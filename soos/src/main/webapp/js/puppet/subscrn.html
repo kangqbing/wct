@@ -1,0 +1,62 @@
+<section class="section section-diandan section-puppet" ng-class="{noorder : isNoOrder()}" ng-controller="SubscrnViewController">
+	<div class="order-plain">
+		<div class="order-box">
+			<div class="order-body grid-box">
+				<!-- 订单条目头 -->
+				<div class="row grid-header">
+					<span class="col-xs-1 grid-cell txt"></span>
+					<span class="col-xs-4 grid-cell txt">品名</span>
+					<span class="col-xs-2 grid-cell num">数量</span>
+					<span class="col-xs-2 grid-cell unit">规格</span>
+					<span class="col-xs-3 grid-cell price">小计</span>
+				</div>
+				<div class="order-list">
+					<orderlist></orderlist>
+				</div>
+			</div>
+			<footer class="order-footer">
+				<!-- 订单单注 -->
+				<div class="order-remark clearfix">
+					<div class="col-xs-7">
+						<label for="">账单合计</label>
+						<span class="dollar">￥</span>
+						<span class="cash">{{calcOrderAmount() | prettyNum}}</span>
+					</div>
+					<div class="col-xs-12" ng-repeat="pay in payLst">
+						<p ng-if="pay.paySubjectCode == '10010001'" class="text-warning payremark">
+							现金{{pay.payRemark}}
+						</p>
+					</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	<div class="ad-plain">
+		<div class="placeholder">
+			<!-- 占位元素，用来作为居中元素参照物 -->
+		</div>
+		<div class="ad-box" id="ad_box" ng-class="{invisible : hasQRCode()}">
+			<!-- <img src="http://www.wired.com/wp-content/uploads/2014/10/ff_disneybaymax10_g.jpeg"/> -->
+			<!-- <img ng-src="{{adSrc}}" width="{{adWidth}}" height="{{adHeight}}" ng-load> -->
+			<carousel interval="adInterval" no-wrap="adNoWrapSlides" ng-if="ADLst.length > 0">
+				<slide ng-repeat="ad in ADLst" active="ad.active">
+					<img ng-src="{{genImgSrc(ad.imgSrc)}}" style="margin:auto;" width="" height="" id="{{ad.id}}"/>
+					<div class="carousel-caption invisible">
+						<h4>{{ad.title}}</h4>
+						<p>{{ad.text}}</p>
+					</div>
+				</slide>
+			</carousel>
+			
+		</div>
+		<div class="qrcode-box" ng-class="{hidden : !hasQRCode()}">
+			<h4>{{curQRCodeTitle}}</h4>
+			<div class="qrcode-wrap">
+				<div id="qrcode" qrcode text="curQRCode" options="curQRCodeOpt"></div>
+				<img class="qrcode-type" data-paytype="{{curQRCodeType}}" ng-src="{{curPayType}}">
+			</div>
+			<p>{{curQRCodeLabel[0]}}<span class="qrcodelabel">{{curQRCodeLabel[1] | mycurrency:"￥" |prettyNum}}</span>{{curQRCodeLabel[2]}}</p>
+		</div>
+		
+	</div>
+</section>

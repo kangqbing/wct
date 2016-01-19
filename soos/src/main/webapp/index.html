@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta id="site_viewport" name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="js/vendor/bootstrap/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="js/vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" type="text/css" href="css/core.css">
+		<title>哗啦啦SAAS收银系统</title>
+	</head>
+	<body ng-controller="AppController">
+		<div id="site_wrapper"  ng-class="{welcome : isWelcomPage, sign : isSignPage, puppet : isPuppet}" >
+			<header id="site_header" class="">
+				<div class="site-nav">
+					<a class="logo">
+						<!-- <img src="./img/blank.png" /> -->
+						<!-- <img src="{{shopLogo}}" /> -->
+						<img ng-src="{{shopLogo}}" />
+					</a>
+					<div class="empname" ng-bind="empName">
+						
+					</div>
+					<nav>
+						<ul class="nav nav-pills nav-stacked">
+							<li ng-class="{active: curNav=='/jiedan'}">
+								<a href="#/jiedan" name="jiedan" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-cloud-download"></span>
+									<span>接单</span>
+								</a>
+							</li>
+							<!-- <li ng-class="{active: curNav=='/dinner/table'}" ng-if="ShopOperationMode == '0'">
+								<a href="#/dinner/table">点单</a>
+							</li>
+							<li ng-class="{active: curNav=='/snack'}" ng-if="ShopOperationMode == '1'">
+								<a href="#/snack">点单</a>
+							</li> -->
+							<!-- <li ng-class="{active: curNav == (ShopOperationMode == '0' ? '/dinner/table' : '/snack')}">
+								<a href="{{ShopOperationMode == '0' ? '#/dinner/table' : '#/snack'}}">
+									<span class="glyphicon glyphicon-edit"></span>
+									<span>点单</span>
+								</a>
+							</li> -->
+							<li ng-class="{active: curNav.indexOf(ShopOperationMode == '0' ? '/dinner' : '/snack') >= 0}">
+								<a href="{{ShopOperationMode == '0' ? '#/dinner/table' : '#/snack'}}" name="diandan" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-edit"></span>
+									<span>点单</span>
+								</a>
+							</li>
+							<li class="" ng-class="{active: curNav=='/chupin', hidden : isFoodMakeStatusActive == 0}">
+								<a href="#/chupin" name="chupin" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-tasks"></span>
+									<span>出品</span>
+								</a>
+							</li>
+							<li ng-class="{active: curNav=='/dingdan'}">
+								<a href="#/dingdan" name="zhangdan" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-th"></span>
+									<span>账单</span>
+								</a>
+							</li>
+							<li ng-class="{active: curNav=='/huiyuan'}">
+								<a href="#/huiyuan" name="huiyuan" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-user"></span>
+									<span>会员</span>
+								</a>
+							</li>
+							<li ng-class="{active: curNav=='/baobiao'}">
+								<a href="#/baobiao" name="baobiao" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-stats"></span>
+									<span>报表</span>
+								</a>
+							</li>
+							<!-- <li ng-class="{active: curNav=='/more'}"><a href="#/more">更多</a></li> -->
+							<li ng-class="{active: checkNavBtnActive(curNav, '/more')}">
+								<a href="#/more" name="gengduo" ng-click="navBtnClick($event)">
+									<span class="badge-notify"></span>
+									<span class="glyphicon glyphicon-th-large"></span>
+									<span>更多</span>
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</header>
+			<div id="site_body" class="" ng-view>
+			</div>
+		</div>
+		<!-- 站点全局顶部alert提示UI组件 -->
+		<alert class="site-toptip" ng-repeat="alert in alerts" type="{{alert.type}}" close="alert.close()">
+			<span ng-bind-html="alert.msg"></span>
+		</alert>
+		<!-- 站点全局进度条UI组件 -->
+		<div class="site-loading" ng-repeat="progressbar in progresses">
+			<progressbar class="progress-striped active" type="{{progressbar.type}}" value="progressbar.curval" max="progressbar.max"></progressbar>
+			<p class="text-warning msg" ng-bind-html="progressbar.msg"></p>
+		</div>
+		
+		
+		<script type="text/javascript">
+			window.count = 0;
+			<!--(if target dev)><!-->
+			window.IXDEBUG = true;
+			window.KooWorkMode = "dev";
+			<!--<!(endif)-->
+			<!--(if target mu)>
+			window.IXDEBUG = true;
+			window.KooWorkMode = "mu";
+			<!(endif)-->
+			<!--(if target dohko)>
+			window.IXDEBUG = true;
+			window.KooWorkMode = "dohko";
+			<!(endif)-->
+			<!--(if target dist)>
+			window.KooWorkMode = "release";
+			<!(endif)-->
+			
+		</script>
+		<script type="text/javascript" src="js/vendor/requirejs/require.js" data-main="./js/main.js"></script>
+	</body>
+</html>

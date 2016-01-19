@@ -1,0 +1,351 @@
+.section-huiyuan{
+    postion : absolute; left : 0; right : 0; top : 0; bottom : 0;height: 100%;
+    .tab-wrapper{
+        padding:20px;width:670px;height: 100%;
+    }
+    .form-inline{
+        label{
+            width: 120px;
+            text-align: right;
+            margin-right: 10px;
+        }
+        .list-group label.list-group-item {
+            position : relative; display : block; text-align: left; margin : 0; width: 100%;
+            cursor : pointer; height : 45px; padding : 0 15px;
+            b {margin-left : 1rem; }
+            span {display: block; padding-left : 1rem; font-weight: normal; font-size: small;}
+        }
+    }
+
+    label[class*=col-], div[class*=col-] {
+        padding-left : 5px; padding-right : 5px;
+    }
+    .form-group> label{
+        font-size: 1.6rem;
+    }
+    .radio-inline, .checkbox-inline{
+        padding-top: 15px; margin-left: 10px;margin-bottom: 15px;
+    }
+    .panel-heading{
+        background: none;
+    }
+
+    .panel{
+        border-radius: 0px;
+    }
+
+    .tab{
+        position: relative;
+        height: 100%;
+    }
+    .submitbtn{
+        position: absolute;
+        bottom: 50px;
+    }
+    .tab-join{
+        .panel-viplevel{
+            position: absolute;
+            right: -300px;
+            top: 0px; bottom : 0;
+            background: white;
+
+            .header{
+                font-size: 18px;
+                padding: 7px 10px;
+                border: 1px solid #c1c1c1;
+                margin-bottom: -1px;
+            }
+
+            ul{
+                width: 300px;
+                padding: 0px;
+                margin: 0px;
+                overflow-y: auto;
+
+                li{
+                    display: block;
+                    height: 80px;
+                    padding: 10px;
+                    margin: -1px 0px;
+                    border: 1px solid #c1c1c1;
+                    cursor: pointer;
+                    position: relative;
+                }
+
+                .true{
+                    background: #ddecff;
+                }
+            }
+        }
+    }
+
+    .tab-recharge{
+        // .panel-rechargeplan{
+        //     position: absolute;
+        //     right: -200px;
+        //     top: -21px;
+        //     background: white;
+
+        //     .header{
+        //         font-size: 18px;
+        //         padding: 7px 10px;
+        //         border: 1px solid #c1c1c1;
+        //         margin-bottom: -1px;
+        //     }
+
+        //     ul{
+        //         width: 300px;
+        //         padding: 0px;
+        //         margin: 0px;
+
+        //         li{
+        //             display: block;
+        //             min-height: 80px;
+        //             padding: 10px;
+        //             margin: -1px 0px;
+        //             border: 1px solid #c1c1c1;
+        //             cursor: pointer;
+        //         }
+
+        //         .active{
+        //             background: #ddecff;
+        //         }
+        //     }
+        // }
+        .panel-rechargeplan {
+            position : fixed; right : 300px; top : 42px; bottom : 0; background-color: #fff; width : 300px;
+            .header{
+                font-size: 18px;
+                padding: 7px 10px;
+                border: 1px solid #c1c1c1;
+                margin-bottom: -1px;
+            }
+            ul{
+                width: 300px;
+                padding: 0px;
+                margin: 0px;
+
+                li{
+                    display: block;
+                    min-height: 80px;
+                    padding: 10px;
+                    margin: -1px 0px;
+                    border: 1px solid #c1c1c1;
+                    cursor: pointer;
+                }
+
+                .active{
+                    background: #ddecff;
+                }
+            }
+        }
+    }
+
+    .tab-consume{
+        .panel-vouchers{
+            // position: absolute;
+            // right: -200px;
+            // top: -21px;
+            position : fixed;
+            right : 300px;
+            top : 42px;
+            bottom : 0;
+            background: white;
+            width : 300px;
+            // overflow : auto;
+
+            .header{
+                font-size: 18px;
+                padding: 7px 10px;
+                border: 1px solid #c1c1c1;
+                margin-bottom: -1px;
+            }
+
+            .table-vouchers {
+                display: block;
+                width : 100%; height : auto;
+                margin : 0; padding : 0;
+                overflow: auto;
+                > li {
+                    display: block; position : relative;
+                    height : 80px; margin : 0; padding : 0;
+                    border : 1px solid #c1c1c1;
+                    cursor : pointer;
+                    &.active {
+                        background: #ddecff;
+                    }
+                    .left, .right {
+                        position : absolute; display: block;
+                        top : 0; bottom : 0;
+                        height : 100%;
+                        text-align: center; font-size: 0;
+                        > .placeholder, > .text-box {
+                            vertical-align: middle; display: inline-block;
+                        }
+                        > .placeholder {
+                            position : relative; width : 0; overflow: hidden;
+                            min-height: inherit; height: inherit;
+                        }
+                    }
+                    .left {
+                        left : 0; width : 80px;
+                        > .text-box {
+                            font-size : 18px; font-weight: bold;
+                            text-align: center;
+                        }
+                    }
+                    .right {
+                        left : 80px; right : 0;
+                        > .text-box {
+                            font-size: 14px; font-weight: 400;
+                            text-align: left;
+                        }
+                    }
+                }
+
+            }
+
+            // ul{
+            //     width: 300px;
+            //     padding: 0px;
+            //     margin: 0px;
+            //     overflow-y: auto;
+
+            //     li{
+            //         display: block;
+            //         height: 80px;
+            //         padding: 5px;
+            //         margin: -1px 0px;
+            //         border: 1px solid #c1c1c1;
+            //         cursor: pointer;
+            //         position: relative;
+
+            //         .left{
+            //             position: absolute;
+            //             display: inline-block;
+            //             width: 80px;
+            //             padding: 10px 5px;
+            //             height: 80px;
+            //             left: 0px;
+            //             top: 0px;
+            //             font-size: 18px;
+            //             font-weight: bold;
+            //         }
+
+            //         .right{
+            //             margin-left: 80px;
+            //             padding : 10px 5px;
+            //         }
+            //     }
+
+            //     .active{
+            //         background: #ddecff;
+            //     }
+            // }
+        }
+    }
+    
+    @media screen and (max-width : 1200px) {
+        .submitbtn{
+                width:350px;
+            }
+        .tab-recharge {
+            width : 500px;
+            .panel-rechargeplan {
+                width : 250px;
+                .header, .table-rechargeplan {
+                    width : 100%;
+                }
+            }
+            
+        }
+        .panel-vouchers {
+                width : 250px;
+                
+                .header, ul {
+                    width: 100%;
+                }
+            }
+
+        .tab-consume , .tab-join {
+            width : 500px;
+        }
+        .tab-cardhandle {
+            //宽度短了table文字会跨行
+            width : 600px;
+        }
+    }
+
+    @media screen and (min-width : 1200px) {
+        .tab-consume {
+            .onumber {
+                margin-left : -2em;
+            }
+        }
+    }
+
+    .userinfo{
+        position: absolute;
+        right: 0px;
+        top: 41px;
+        border: 1px solid #c1c1c1;
+        height: 100%;
+        width: 300px;
+        background: white;
+
+        .header{
+            font-size: 18px;
+            padding: 7px 10px;
+            border-bottom: 1px solid #c1c1c1;
+        }
+
+        .label{
+            display: inline-block;
+            color: #000000;
+            font-size: 16px;
+            padding: 0px;
+            margin: 0px 10px 0 0;
+            width: 85px;
+            text-align: right;
+            font-weight: normal;
+        }
+
+        .btn-prtvipinfo{
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            width: 300px;
+            height: 50px;
+        }
+    }
+
+    .btn-disable{
+        background: #c1c1c1 !important;
+        cursor: not-allowed !important;
+
+        :hover{
+            background: #c1c1c1 !important;
+            cursor: not-allowed !important;
+        }
+    }
+    .help-block{
+        width: 300px;
+    }
+    .btn-submit{
+        margin-top : 20px;
+        height: 60px;
+        // width: 500px;
+    }
+
+    .receipt-cnt {
+        position : absolute; top : 40px; bottom : 0px; left : 0; right : 0; overflow: auto;
+        padding-bottom : 50px;
+        p {
+            margin : 0; padding : 0; line-height: 1.5em; font-size: 1em;
+            &.font-1x {font-size : 1em;}
+            &.font-2x {font-size : 1.5em;}
+            &.bold {font-weight: 700;}
+            &.highlight > span {background-color: #111; color : #fff;}
+        }
+    }
+}

@@ -1,0 +1,64 @@
+.section-baobiao {
+	.tab-page {width : percentage(1 / 4);}
+	.tab-cnt {
+		position: absolute; top : 42px; bottom : 0; left : 0; right : 0; overflow: hidden;
+		.cnt-header {
+			position: relative; background-color: #fff; z-index: 10;
+		}
+		.cnt-body {
+			position: absolute; top : 0; right: 0; bottom : 0; left : 0; z-index: 9;
+		}
+	}
+	.tab-biz {
+		.cnt-body {
+			top : 0; overflow: auto;
+		}
+	}
+	.tab-log, .tab-period {
+		.cnt-body {
+			top : 46px; padding-bottom : 72px; overflow: auto;
+			th{text-align: center; vertical-align: middle;}
+			td{text-align: right;}
+		}
+		.cnt-footer {
+			position: absolute; bottom : 0; left : 0; right : 0; height : 72px; z-index: 99; background-color: #fff;
+		}
+	}
+	.tab-period {
+		.cnt-body {padding-bottom : 0;}
+	}
+	.tab-comp {
+		.cnt-body {
+			top : 138px;
+		}
+		// .btngrp-box.btngrp-5x3 {
+		// 	.btngrp-box(100%, 35rem, 3, 5);
+		// }
+		.btn-group > .btn {
+			border-radius: 3px!important; margin-bottom : .5rem; width : 10em; margin-right : 1em;
+			&.active {
+				background : #449D44; border-color: #398439; color : #fff;
+			}
+		}
+		.receipt-box {
+			position : relative; height : 100%; padding : 15px 0px 60px 15px; overflow: hidden; border : 1px solid @xBaseBorderColor; text-align: left;
+			.receipt-cnt {
+				height : 100%; overflow: auto;
+			}
+			.receipt-footer {
+				position: absolute; bottom : 0; left : 0; width : 100%;
+			}
+
+			p {
+				margin : 0; padding : 0; line-height: 1.5em; font-size: 1em;
+				&.font-1x {font-size : 1em;}
+				&.font-2x {font-size : 1.5em;}
+				&.bold {font-weight: 700;}
+				&.highlight > span {background-color: #111; color : #fff;}
+			}
+		}
+		.receipt-filter {
+			padding : 0 15px;
+		}
+	}
+}
